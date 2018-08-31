@@ -1,6 +1,7 @@
 import React from 'react';
 import { Alert, Button, StyleSheet, Text, View } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 var userStories = [
   {
@@ -19,8 +20,9 @@ var userStoriesList = userStories.map(data => (
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
-    title: 'DigiComs'
+    title: 'Home'
   }
+
   render() {
     return (
       <View style={styles.container}>
@@ -128,12 +130,33 @@ class ExploreScreen extends React.Component {
   }
 }
 
-const RootStack = createBottomTabNavigator({
-  Home: { screen: HomeScreen },
-  Studio: { screen: StudioScreen },
-  Library: { screen: LibraryScreen },
-  Explore: { screen: ExploreScreen },
-});
+const RootStack = createBottomTabNavigator(
+  {
+    Home: { screen: HomeScreen },
+    Studio: { screen: StudioScreen },
+    Library: { screen: LibraryScreen },
+    Explore: { screen: ExploreScreen },
+  },
+  {
+    navigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, tintColor }) => {
+        const { routeName } = navigation.state;
+        let iconName;
+        if (routeName === 'Home') {
+          iconName = `ios-information-circle${focused ? '' : '-outline'}`;
+        } else if (routeName === 'Studio') {
+          iconName = `ios-options${focused ? '' : '-outline'}`;
+        }
+
+        return <Ionicons name={iconName} size={25} color={tintColor} />;
+      },
+    }),
+    tabBarOptions: {
+      activeTintColor: 'tomato',
+      inactiveTintColor: 'gray',
+    },
+  }
+);
 
 export default class App extends React.Component {
     render() {

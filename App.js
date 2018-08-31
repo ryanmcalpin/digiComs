@@ -3,7 +3,7 @@ import { Alert, Button, StyleSheet, Text, View } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-var userStories = [
+var userComics = [
   {
     id: 1,
     title: "test story 1"
@@ -14,7 +14,7 @@ var userStories = [
   }
 ]
 
-var userStoriesList = userStories.map(data => (
+var userComicsList = userComics.map(data => (
   <Text key={data.id}>{data.title}</Text>
 ));
 
@@ -26,19 +26,10 @@ class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Button
-          onPress={() => this.props.navigation.navigate('Home')}
-          title="Home"
-        />
-        <Button
-          onPress={() => this.props.navigation.navigate('Studio')}
-          title="New Story"
-        />
-        <Button
-          onPress={() => this.props.navigation.navigate('Explore')}
-          title="Explore"
-        />
-        {userStoriesList}
+        <Text>My Comics</Text>
+        {userComicsList}
+        <Text>Suggested Comics</Text>
+        {userComicsList}
       </View>
     );
   }

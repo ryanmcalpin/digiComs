@@ -35,10 +35,6 @@ class HomeScreen extends React.Component {
           title="New Story"
         />
         <Button
-          onPress={() => this.props.navigation.navigate('Library')}
-          title="Library"
-        />
-        <Button
           onPress={() => this.props.navigation.navigate('Explore')}
           title="Explore"
         />
@@ -88,27 +84,6 @@ class StudioScreen extends React.Component {
   }
 }
 
-class LibraryScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Library'
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      testProp: "library prop"
-    };
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>{this.state.testProp}</Text>
-      </View>
-    )
-  }
-}
-
 class ExploreScreen extends React.Component {
   static navigationOptions = {
     title: 'Explore'
@@ -134,7 +109,6 @@ const RootStack = createBottomTabNavigator(
   {
     Home: { screen: HomeScreen },
     Studio: { screen: StudioScreen },
-    Library: { screen: LibraryScreen },
     Explore: { screen: ExploreScreen },
   },
   {

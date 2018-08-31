@@ -1,6 +1,6 @@
 import React from 'react';
 import { Alert, Button, StyleSheet, Text, View } from 'react-native';
-import { createStackNavigator } from 'react-navigation';
+import { createBottomTabNavigator } from 'react-navigation';
 
 var userStories = [
   {
@@ -17,7 +17,7 @@ var userStoriesList = userStories.map(data => (
   <Text key={data.id}>{data.title}</Text>
 ));
 
-export class HomeScreen extends React.Component {
+class HomeScreen extends React.Component {
   static navigationOptions = {
     title: 'DigiComs'
   }
@@ -29,15 +29,15 @@ export class HomeScreen extends React.Component {
           title="Home"
         />
         <Button
-          onPress={() => this.props.navigation.navigate('Test')}
+          onPress={() => this.props.navigation.navigate('Studio')}
           title="New Story"
         />
         <Button
-          onPress={() => this.props.navigation.navigate('Test')}
+          onPress={() => this.props.navigation.navigate('Library')}
           title="Library"
         />
         <Button
-          onPress={() => this.props.navigation.navigate('Test')}
+          onPress={() => this.props.navigation.navigate('Explore')}
           title="Explore"
         />
         {userStoriesList}
@@ -65,22 +65,74 @@ export class HomeScreen extends React.Component {
   // )
 }
 
-class TestScreen extends React.Component {
+class StudioScreen extends React.Component {
   static navigationOptions = {
-    title: 'Test Screen'
+    title: 'Studio'
   }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      testProp: "studio prop"
+    };
+  }
+
   render() {
     return (
-      <View>
-        <Text>Yass</Text>
+      <View style={styles.container}>
+        <Text>{this.state.testProp}</Text>
       </View>
     )
   }
 }
 
-const RootStack = createStackNavigator({
+class LibraryScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Library'
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      testProp: "library prop"
+    };
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text>{this.state.testProp}</Text>
+      </View>
+    )
+  }
+}
+
+class ExploreScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Explore'
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      testProp: "explore prop"
+    };
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text>{this.state.testProp}</Text>
+      </View>
+    )
+  }
+}
+
+const RootStack = createBottomTabNavigator({
   Home: { screen: HomeScreen },
-  Test: { screen: TestScreen },
+  Studio: { screen: StudioScreen },
+  Library: { screen: LibraryScreen },
+  Explore: { screen: ExploreScreen },
 });
 
 export default class App extends React.Component {

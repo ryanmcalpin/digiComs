@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, Button, FlatList, StyleSheet, Text, View } from 'react-native';
+import { Alert, Button, FlatList, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Card } from "react-native-elements";
@@ -15,48 +15,54 @@ var testComics = [
   }
 ]
 
-const data = [
+const userComics = [
   {
+    id: 1,
     imageUrl: "http://via.placeholder.com/178x115",
     title: "something"
   },
   {
+    id: 2,
     imageUrl: "http://via.placeholder.com/178x115",
     title: "something two"
   },
   {
+    id: 3,
     imageUrl: "http://via.placeholder.com/178x115",
     title: "something three"
   },
   {
+    id: 4,
     imageUrl: "http://via.placeholder.com/178x115",
     title: "something four"
   },
   {
+    id: 5,
     imageUrl: "http://via.placeholder.com/178x115",
     title: "something five"
   },
   {
+    id: 6,
     imageUrl: "http://via.placeholder.com/178x115",
     title: "something six"
   }
 ];
 
-var userComics = testComics;
-var suggestedComics = testComics;
+const suggestedComics = userComics;
+const userProjects = userComics;
 
-var userComicsList = userComics.map(data => (
-  <Text key={data.id}>{data.title}</Text>
-));
-var SuggestedComicsList = suggestedComics.map(data => (
-  <Text key={data.id}>{data.title} suggested</Text>
-));
+// var userProjectsList = userComics.map(data => (
+//   <Text key={data.id}>{data.title}</Text>
+// ));
+// var SuggestedComicsList = suggestedComics.map(data => (
+//   <Text key={data.id}>{data.title} suggested</Text>
+// ));
 
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: data
+      userComics: userComics
     };
   }
 
@@ -65,33 +71,41 @@ class HomeScreen extends React.Component {
   }
 
   render() {
-    return (
-      <View style={styles.screenContainer}>
-      <Text>My Comics</Text>
-        <FlatList
-        horizontal
-        data={this.state.data}
-        renderItem={({ item: rowData }) => {
-          return (
-            <Card
-            title={null}
-            image={{ uri: rowData.imageUrl }}
-            imageStyle={styles.cardImage}
-            containerStyle={styles.cardContainer}
-            >
-            <Text style={{ marginBottom: 10 }}>
-            {rowData.title}
-            </Text>
-            </Card>
-          );
-        }}
-        keyExtractor={(item, index) => index.toString()}
-        />
-      </View>
-
-    );
+    if (this.state.userComics.length > 0) {
+      return (
+        <View style={styles.screenContainer}>
+          <Text>My Comics</Text>
+          <FlatList
+          horizontal
+          data={this.state.userComics}
+          renderItem={({ item: rowData }) => {
+            return (
+              <Card
+              title={null}
+              image={{ uri: rowData.imageUrl }}
+              imageStyle={styles.cardImage}
+              containerStyle={styles.cardContainer}
+              >
+                <Text style={{ marginBottom: 10 }}>
+                {rowData.title}
+                </Text>
+              </Card>
+            );
+          }}
+          keyExtractor={(item, index) => index.toString()}
+          />
+        </View>
+      );
+    } else {
+      return (
+        <View style={styles.screenContainer}>
+          <Text>Go to the studio tab to make your first comic!</Text>
+        </View>
+      )
+    }
   }
 }
+
 
 class StudioScreen extends React.Component {
   static navigationOptions = {
@@ -101,19 +115,31 @@ class StudioScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      testProp: "studio prop"
+      userProjects: userProjects
     };
+  }
+
+  _onPressButton() {
+    console.log('okaay');
   }
 
   render() {
     return (
       <View style={styles.screenContainer}>
-        <Text>{this.state.testProp}</Text>
-        {userComicsList}
+        <FlatList
+          data={this.state.userProjects}
+          renderItem={({item}) => (
+            <TouchableHighlight onPress={this._onPressButton}>
+              <Text style={null}>{item.title}</Text>
+            </TouchableHighlight>
+          )}
+          keyExtractor={(item, index) => index.toString()}
+        />
       </View>
     )
   }
 }
+
 
 class ExploreScreen extends React.Component {
   static navigationOptions = {
@@ -123,15 +149,33 @@ class ExploreScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      testProp: "explore prop"
+      suggestedComics: suggestedComics
     };
   }
 
   render() {
     return (
       <View style={styles.screenContainer}>
-        <Text>{this.state.testProp}</Text>
-        {SuggestedComicsList}
+        <Text>Suggested Comics</Text>
+        <FlatList
+        horizontal
+        data={this.state.suggestedComics}
+        renderItem={({ item: rowData }) => {
+          return (
+            <Card
+            title={null}
+            image={{ uri: rowData.imageUrl }}
+            imageStyle={styles.cardImage}
+            containerStyle={styles.cardContainer}
+            >
+              <Text style={{ marginBottom: 10 }}>
+              {rowData.title}
+              </Text>
+            </Card>
+          );
+        }}
+        keyExtractor={(item, index) => index.toString()}
+        />
       </View>
     )
   }

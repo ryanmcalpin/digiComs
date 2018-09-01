@@ -3,7 +3,7 @@ import { Alert, Button, StyleSheet, Text, View } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-var userComics = [
+var testComics = [
   {
     id: 1,
     title: "test story 1"
@@ -14,8 +14,14 @@ var userComics = [
   }
 ]
 
+var userComics = testComics;
+var suggestedComics = testComics;
+
 var userComicsList = userComics.map(data => (
   <Text key={data.id}>{data.title}</Text>
+));
+var SuggestedComicsList = suggestedComics.map(data => (
+  <Text key={data.id}>{data.title} suggested</Text>
 ));
 
 class HomeScreen extends React.Component {
@@ -29,7 +35,7 @@ class HomeScreen extends React.Component {
         <Text>My Comics</Text>
         {userComicsList}
         <Text>Suggested Comics</Text>
-        {userComicsList}
+        {SuggestedComicsList}
       </View>
     );
   }
@@ -70,6 +76,7 @@ class StudioScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Text>{this.state.testProp}</Text>
+        {userComicsList}
       </View>
     )
   }
@@ -91,6 +98,7 @@ class ExploreScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Text>{this.state.testProp}</Text>
+        {SuggestedComicsList}
       </View>
     )
   }
@@ -108,9 +116,11 @@ const RootStack = createBottomTabNavigator(
         const { routeName } = navigation.state;
         let iconName;
         if (routeName === 'Home') {
-          iconName = `ios-information-circle${focused ? '' : '-outline'}`;
+          iconName = `ios-home${focused ? '' : '-outline'}`;
         } else if (routeName === 'Studio') {
-          iconName = `ios-options${focused ? '' : '-outline'}`;
+          iconName = `ios-create${focused ? '' : '-outline'}`;
+        } else if (routeName === 'Explore') {
+          iconName = `ios-globe${focused ? '' : '-outline'}`;
         }
 
         return <Ionicons name={iconName} size={25} color={tintColor} />;

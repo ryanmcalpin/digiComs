@@ -1,6 +1,6 @@
 import React from 'react';
 import { Alert, Button, FlatList, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
-import { createBottomTabNavigator } from 'react-navigation';
+import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Card } from "react-native-elements";
 
@@ -119,8 +119,10 @@ class StudioScreen extends React.Component {
     };
   }
 
-  _onPressButton() {
-    console.log('okaay');
+  _onPressButton(item) {
+    this.props.navigation.navigate('Edit', {
+      item: item
+    });
   }
 
   render() {
@@ -128,9 +130,16 @@ class StudioScreen extends React.Component {
       <View style={styles.screenContainer}>
         <FlatList
           data={this.state.userProjects}
-          renderItem={({item}) => (
-            <TouchableHighlight onPress={this._onPressButton}>
-              <Text style={null}>{item.title}</Text>
+          renderItem={({item: rowData}) => (
+            <TouchableHighlight onPress={() => this._onPressButton(rowData)}>
+              <Card
+              title={null}
+              containerStyle={styles.projectListItem}
+              >
+                <Text style={{ marginBottom: 10 }}>
+                {rowData.title}
+                </Text>
+              </Card>
             </TouchableHighlight>
           )}
           keyExtractor={(item, index) => index.toString()}
@@ -181,10 +190,42 @@ class ExploreScreen extends React.Component {
   }
 }
 
+class EditScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Edit'
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+
+    };
+  }
+
+  render() {
+    const { navigation } = this.props;
+    const item = navigation.getParam('item', 'Oops, no item!');
+
+    return (
+      <View style={styles.screenContainer}>
+        <Text>Edit {item.title}</Text>
+        <Text>{item.imageUrl}</Text>
+        <Text>id# {item.id}</Text>
+
+      </View>
+    )
+  }
+}
+
+const StudioStackNav = createStackNavigator({
+  Studio: { screen: StudioScreen },
+  Edit: { screen: EditScreen }
+})
+
 const RootStack = createBottomTabNavigator(
   {
     Home: { screen: HomeScreen },
-    Studio: { screen: StudioScreen },
+    Studio: { screen: StudioStackNav },
     Explore: { screen: ExploreScreen },
   },
   {
@@ -231,5 +272,8 @@ const styles = StyleSheet.create({
   },
   cardImage: {
     height: 178
+  },
+  projectListItem: {
+    flex: 1
   }
 });

@@ -1,7 +1,8 @@
 import React from 'react';
-import { Alert, Button, StyleSheet, Text, View } from 'react-native';
+import { Alert, Button, FlatList, StyleSheet, Text, View } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Card } from "react-native-elements";
 
 var testComics = [
   {
@@ -14,6 +15,33 @@ var testComics = [
   }
 ]
 
+const data = [
+  {
+    imageUrl: "http://via.placeholder.com/160x160",
+    title: "something"
+  },
+  {
+    imageUrl: "http://via.placeholder.com/160x160",
+    title: "something two"
+  },
+  {
+    imageUrl: "http://via.placeholder.com/160x160",
+    title: "something three"
+  },
+  {
+    imageUrl: "http://via.placeholder.com/160x160",
+    title: "something four"
+  },
+  {
+    imageUrl: "http://via.placeholder.com/160x160",
+    title: "something five"
+  },
+  {
+    imageUrl: "http://via.placeholder.com/160x160",
+    title: "something six"
+  }
+];
+
 var userComics = testComics;
 var suggestedComics = testComics;
 
@@ -25,39 +53,43 @@ var SuggestedComicsList = suggestedComics.map(data => (
 ));
 
 class HomeScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: data
+    };
+  }
+
   static navigationOptions = {
     title: 'Home'
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text>My Comics</Text>
-        {userComicsList}
-        <Text>Suggested Comics</Text>
-        {SuggestedComicsList}
+      <View style={styles.screenContainer}>
+      <Text>My Comics</Text>
+        <FlatList
+        horizontal
+        data={this.state.data}
+        renderItem={({ item: rowData }) => {
+          return (
+            <Card
+            title={null}
+            image={{ uri: rowData.imageUrl }}
+            containerStyle={{ padding: 0, width: 160 }}
+            >
+            <Text style={{ marginBottom: 10 }}>
+            {rowData.title}
+            </Text>
+            </Card>
+          );
+        }}
+        keyExtractor={(item, index) => index.toString()}
+        />
       </View>
+
     );
   }
-
-  doIt() {
-    alert("okaaay");
-  }
-
-  createNewStory() {
-    // let newStory
-  }
-
-  // Alert.alert(
-  //   'Alert Title',
-  //   'My Alert Msg',
-  //   [
-  //     // {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-  //     {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-  //     {text: 'OK', onPress: () => console.log('OK Pressed')},
-  //   ],
-  //   { cancelable: false }
-  // )
 }
 
 class StudioScreen extends React.Component {
@@ -74,7 +106,7 @@ class StudioScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.screenContainer}>
         <Text>{this.state.testProp}</Text>
         {userComicsList}
       </View>
@@ -96,7 +128,7 @@ class ExploreScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.screenContainer}>
         <Text>{this.state.testProp}</Text>
         {SuggestedComicsList}
       </View>
@@ -140,10 +172,11 @@ export default class App extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  screenContainer: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: 32,
   },
 });

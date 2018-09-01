@@ -17,27 +17,27 @@ var testComics = [
 
 const data = [
   {
-    imageUrl: "http://via.placeholder.com/160x160",
+    imageUrl: "http://via.placeholder.com/178x115",
     title: "something"
   },
   {
-    imageUrl: "http://via.placeholder.com/160x160",
+    imageUrl: "http://via.placeholder.com/178x115",
     title: "something two"
   },
   {
-    imageUrl: "http://via.placeholder.com/160x160",
+    imageUrl: "http://via.placeholder.com/178x115",
     title: "something three"
   },
   {
-    imageUrl: "http://via.placeholder.com/160x160",
+    imageUrl: "http://via.placeholder.com/178x115",
     title: "something four"
   },
   {
-    imageUrl: "http://via.placeholder.com/160x160",
+    imageUrl: "http://via.placeholder.com/178x115",
     title: "something five"
   },
   {
-    imageUrl: "http://via.placeholder.com/160x160",
+    imageUrl: "http://via.placeholder.com/178x115",
     title: "something six"
   }
 ];
@@ -76,7 +76,8 @@ class HomeScreen extends React.Component {
             <Card
             title={null}
             image={{ uri: rowData.imageUrl }}
-            containerStyle={{ padding: 0, width: 160 }}
+            imageStyle={styles.cardImage}
+            containerStyle={styles.cardContainer}
             >
             <Text style={{ marginBottom: 10 }}>
             {rowData.title}
@@ -179,4 +180,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 32,
   },
+  cardContainer: {
+    padding: 0,
+    height: 218,
+    width: 115,
+  },
+  cardImage: {
+    height: 178
+  }
 });

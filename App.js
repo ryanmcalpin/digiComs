@@ -125,9 +125,23 @@ class StudioScreen extends React.Component {
     });
   }
 
+  createNewComic() {
+    console.log('yaaaaaaa');
+  }
+
   render() {
     return (
       <View style={styles.screenContainer}>
+        <TouchableHighlight onPress={() => this.createNewComic()}>
+          <Card
+          title={null}
+          containerStyle={styles.projectListItem}
+          >
+            <Text style={{ marginBottom: 10 }}>
+            Create a new Comic
+            </Text>
+          </Card>
+        </TouchableHighlight>
         <FlatList
           data={this.state.userProjects}
           renderItem={({item: rowData}) => (
@@ -217,10 +231,15 @@ class EditScreen extends React.Component {
   }
 }
 
-const StudioStackNav = createStackNavigator({
-  Studio: { screen: StudioScreen },
-  Edit: { screen: EditScreen }
-})
+const StudioStackNav = createStackNavigator(
+  {
+    Studio: { screen: StudioScreen },
+    Edit: { screen: EditScreen }
+  },
+  {
+    headerMode: 'none',
+  }
+);
 
 const RootStack = createBottomTabNavigator(
   {
@@ -274,6 +293,7 @@ const styles = StyleSheet.create({
     height: 178
   },
   projectListItem: {
-    flex: 1
+    // flex: 1,
+    height: 100
   }
 });

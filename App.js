@@ -233,15 +233,30 @@ class EditScreen extends React.Component {
 
 const StudioStackNav = createStackNavigator(
   {
-    Studio: { screen: StudioScreen },
-    Edit: { screen: EditScreen }
+    Studio: {
+      screen: StudioScreen,
+      navigationOptions: () => ({
+        header: null,
+      })
+    },
+    Edit: {
+      screen: EditScreen,
+      navigationOptions: () => ({
+        header: null,
+        // headerStyle: {
+        //   borderBottomWidth: 1,
+        //   borderBottomColor: 'grey',
+        //   ugh: 'ya'
+        // }
+      }),
+    }
   },
   {
-    headerMode: 'none',
+    // headerMode: 'float',
   }
 );
 
-const RootStack = createBottomTabNavigator(
+const TabNav = createBottomTabNavigator(
   {
     Home: { screen: HomeScreen },
     Studio: { screen: StudioStackNav },
@@ -264,10 +279,14 @@ const RootStack = createBottomTabNavigator(
       },
     }),
     tabBarOptions: {
-      activeTintColor: 'tomato',
-      inactiveTintColor: 'gray',
+      activeTintColor: 'black',
+      inactiveTintColor: 'black',
     },
   }
+);
+
+const RootStack = createStackNavigator(
+  { Tabs: { screen: TabNav } }
 );
 
 export default class App extends React.Component {
@@ -282,7 +301,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 32,
+    // marginTop: 32,
   },
   cardContainer: {
     padding: 0,
